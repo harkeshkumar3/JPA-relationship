@@ -13,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.harkesh.info.CommentInfo;
+import com.harkesh.info.UserInfo;
+import com.harkesh.model.Comments;
+import com.harkesh.model.Posts;
 import com.harkesh.model.UserAddress;
 import com.harkesh.model.UserEntity;
-import com.harkesh.model.UserInfo;
+import com.harkesh.repo.CommentRepo;
 import com.harkesh.repo.UserAddressRepo;
 import com.harkesh.repo.UserRepo;
 
@@ -24,15 +28,15 @@ public class UserController {
 
 	@Autowired
 	private UserRepo userRepo;
-	
 	@Autowired
 	private UserAddressRepo addressRepo;
 	
+
 	@GetMapping("/getAllUser")
-	public Collection<UserEntity> getAllUserList(){
+	public Collection<UserEntity> getAllUserList() {
 		return userRepo.findAll();
 	}
-	
+
 	@GetMapping("/getuser/{userId}")
 	public Optional<UserEntity> getUserEntity(@PathVariable int userId) {
 		return userRepo.findById(userId);
@@ -48,13 +52,15 @@ public class UserController {
 		user.setEmail(userInfo.getEmail());
 		user.setCommonField(userInfo.getCommonField());
 		user.setRoles(userInfo.getRoles());
-		
+
 		return userRepo.save(user);
 	}
-	
+
 	@PostMapping("/saveadd")
-	public UserAddress saveAddress (@RequestBody UserAddress address) {
+	public UserAddress saveAddress(@RequestBody UserAddress address) {
 		System.out.println("Save User Address =========>>>");
 		return addressRepo.save(address);
 	}
+
+	
 }
